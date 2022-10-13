@@ -5,7 +5,7 @@ function Post({post}) {
   return (
     <div className='post'>
         <div className='upvotes'>
-          <i class="ph-arrow-fat-up upvote--arrow" ></i>
+          <i className="ph-arrow-fat-up upvote--arrow" ></i>
           <p className='post--upvotes'>{post.upvotes}</p>
           <i className="ph-arrow-fat-up upvote--arrow arrow2" ></i>
         </div>
@@ -16,7 +16,7 @@ function Post({post}) {
             <p className='post--title'>{post.title}</p>
           </div>
 
-          {post.is_video ? <iframe src={post.video_url} />: <img src={post.image} className='post--image'/>}
+          {post.is_video ? <iframe src={post.video_url} width='100%' height='350px'/>: <img src={post.image} className='post--image'/>}
 
           <p className='post--comments'><i className="ph-chat-centered"></i> <span className='comment-num'>{post.num_comments} comments</span></p>
         </div>

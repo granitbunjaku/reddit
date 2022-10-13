@@ -92,9 +92,72 @@ body{
     font-size: 12px;
 }
 
-.homepage--body {
-    width: 50%;
+.homepage--container {
+    width: 52%;
     margin: 40px auto;
+}
+
+.homepage--content {
+    display: flex;
+    width: 100%;
+}
+
+.top--subreddit img,
+.top--subreddit svg{
+    width: 30px;
+    height: 30px;
+    border-radius: 50px;
+    border: none;
+}
+
+.loading {
+    margin: 45vh auto;
+}
+
+.top--subreddit p{
+    font-size: 14px;
+}
+
+.top--subreddits {
+    width: 330px;
+    height: 328px;
+    background-color: white;
+    border-radius: 6px;
+    margin: 15px 0px 0px 15px;
+}
+
+.top--subreddits .banner{
+    width: 100%;
+    height: 80px;
+    border-radius: 6px 6px 0px 0px;
+    object-fit: cover;
+}
+
+.top--details {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.join--button {
+    width: 56px;
+    height: 24px;
+    background-color: #0079d3;
+    color: white;
+    border: 0px;
+    border-radius: 15px;
+    font-weight: 600;
+}
+
+.top--subreddit {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0px 15px;
+}
+
+.top--subreddit:not(:last-child) {
+    border-bottom: 1px solid #eceef1;
 }
 
 .default--icon {
@@ -235,7 +298,7 @@ body{
 }
 
 .trending {
-    width: 238px;
+    width: 218px;
     height: 185px;
     background-size: cover;
     border-radius: 8px;
@@ -243,6 +306,7 @@ body{
     display: flex;
     flex-direction: column;
     justify-content: end;
+    padding: 0px 10px;
 }
 
 .trending p{

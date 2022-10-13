@@ -3,16 +3,9 @@ import React, { useEffect, useState } from 'react'
 import DefaultIcon from '../helpers/DefaultIcon'
 import nFormatter from '../helpers/formatter'
 
-function Navbar({searchActive, setSearchActive}) {
-  const [subreddits, setSubreddits] = useState([])
+function Navbar({searchActive, setSearchActive, subreddits, setSubreddits}) {
   const [search, setSearch] = useState('')
   const [searchResults, setSearchResults] = useState([])
-
-  useEffect(() => {
-    axios.get('https://www.reddit.com/subreddits.json?limit=100')
-      .then(resp => setSubreddits(() => resp.data.data.children.map(x => ({ name: x.data.display_name, members: x.data.subscribers, icon: x.data.icon_img }))))
-  }, [])
-
 
   function searchHandler(e) {
     setSearch(e.target.value)
