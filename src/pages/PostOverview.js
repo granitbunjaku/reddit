@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router";
+import formatter from "../helpers/formatter";
 
 function PostOverview() {
   const [post, setPost] = useState({});
@@ -23,7 +24,7 @@ function PostOverview() {
           subreddit: postRes.subreddit,
           author: postRes.author,
           title: postRes.title,
-          upvotes: postRes.ups,
+          upvotes: formatter(postRes.ups),
           image: postRes.url_overridden_by_dest,
           is_video: postRes.is_video,
           video_url: postRes.is_video

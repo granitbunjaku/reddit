@@ -121,6 +121,136 @@ iframe {
   cursor: pointer;
 }
 
+.subreddit--posts .post:first-child {
+  margin-top: 0px;
+}
+
+.subreddit--aboutsection {
+  background-color: white;
+  border: 1px solid white;
+  border-radius: 7px;
+  width: 400px;
+  height: fit-content;
+}
+
+.subreddit--aboutsection .about--text{
+  margin: 0px;
+  padding: 11px 15px;
+  border-radius: 7px 7px 0px 0px;
+  color: white;
+}
+
+.subreddit--container {
+  display: flex;
+}
+
+.subreddit--description {
+  display: flex;
+  flex-direction: column;
+  padding: 0px 10px;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.subreddit--aboutsection p{
+  margin: 0px;
+}
+
+.subreddit--members {
+  display: flex;
+  gap: 15px;
+  border-top: 1px solid #dadada;
+  padding: 10px 0px;
+}
+
+.subreddit--members p{
+  display: flex;
+  flex-direction: column;
+}
+
+.subreddit--members p span:last-child{
+  color: #9e9e9e;
+}
+
+.subreddit--container {
+  display: flex;
+  justify-content: center;
+}
+
+.all--content {
+  gap: 20px;
+  display: flex;
+  justify-content: center;
+  margin-top: 16px;
+}
+
+.banner--image .banner {
+  width: 100%;
+  height: 350px;
+  background-repeat: no-repeat !important;
+  background-size: cover !important;
+}
+
+.subreddit--details img,
+.subreddit--details svg {
+  width: 80px;
+  height: 80px;
+  border-radius: 50px;
+}
+
+.subreddit--text > p{
+  margin: 3px 0px;
+}
+
+.subreddit--text .subreddit--title{
+  font-size: 23px;
+  font-weight: 600;
+}
+
+.subreddit--text .subreddit--name{
+  font-size: 14px;
+  color: #808080;
+}
+
+.subreddit--details {
+  background-color: white;
+  display: flex;
+  gap: 15px;
+  padding: 10px 550px;
+  height: 80px;
+}
+
+.join--buttons {
+  width: 96px;
+  height: 32px;
+  border: none;
+  color: white;
+  border-radius: 50px;
+  font-weight: 600;
+  margin-top: 8px;
+}
+
+.subreddit--image{
+  width: 95px;
+  height: 95px;
+  background-color: white;
+  border-radius: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  left: 430px;
+  top: 375px;
+}
+
+.posts {
+  font-size: 15px;
+  position: absolute;
+  left: 450px;
+  top: 472px;
+  cursor: pointer;
+}
+
 .copy {
   position: absolute;
   left: 33%;
@@ -317,6 +447,7 @@ iframe {
   position: absolute;
   right: 750px;
   border: 1px solid #dbe0e7;
+  z-index: 999;
 }
 
 .search--results p {

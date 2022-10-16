@@ -1,11 +1,11 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { CircleLoader } from "react-spinners";
-import Navbar from "../components/Navbar";
 import Post from "../components/Post";
 import TopSubreddits from "../components/Topsubreddits";
 import Trending from "../components/Trending";
+import formatter from "../helpers/formatter";
 
 function Homepage({
   subreddits,
@@ -13,7 +13,6 @@ function Homepage({
 }) {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
-  const history = useNavigate();
 
   useEffect(() => {
     axios
@@ -27,11 +26,11 @@ function Homepage({
           resp
             .map((x) =>
               x.data.data.children.map((y) => ({
-                upvotes: y.data.ups,
+                upvotes: formatter(y.data.ups),
                 author_fullname: y.data.author,
                 title: y.data.title,
                 subreddit: y.data.subreddit_name_prefixed,
-                num_comments: y.data.num_comments,
+                num_comments: formatter(y.data.num_comments),
                 image: y.data.is_gallery ? y.data.thumbnail : y.data.url_overridden_by_dest,
                 is_video: y.data.is_video,
                 video_url: y.data.secure_media?.reddit_video?.fallback_url,

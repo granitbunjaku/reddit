@@ -6,6 +6,7 @@ import "./App.css";
 import Navbar from "./components/Navbar";
 import Homepage from "./pages/Homepage";
 import PostOverview from "./pages/PostOverview";
+import Subreddit from "./pages/Subreddit";
 
 function App() {
   const [searchActive, setSearchActive] = useState(false);
@@ -43,7 +44,9 @@ function App() {
           subreddits={subreddits}
           setSubreddits={setSubreddits}
         />} />
-        <Route path="r/:subreddit/comments/:id/:title" element={<PostOverview />}/>
+        <Route path="/post/r/:subreddit/comments/:id/:title" element={<PostOverview />}/>
+        <Route path="r/:subreddit" element={<Subreddit />}/>
+        
       </Routes>
     </div>
   );

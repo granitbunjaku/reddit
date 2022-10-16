@@ -52,21 +52,26 @@ function Navbar({ searchActive, setSearchActive, subreddits, setSubreddits }) {
         </div>
       </div>
 
-      <div className="search--results">
         {searchResults &&
           searchActive &&
-          searchResults.map((res) => {
-            return (
-              <div className="results">
-                {res.icon.length ? <img src={res.icon} /> : DefaultIcon}
-                <p key={res.name}>
-                  <p>{res.name}</p>
-                  <p>Community &bull; {nFormatter(res.members, 1)} members</p>
-                </p>
-              </div>
-            );
-          })}
-      </div>
+          <div className="search--results">
+            {
+              searchResults.map((res) => {
+                return (
+                  <Link to={`r/${res.name}`}>
+                    <div className="results">
+                      {res.icon.length ? <img src={res.icon} /> : DefaultIcon}
+                      <p key={res.name}>
+                        <p>{res.name}</p>
+                        <p>Community &bull; {nFormatter(res.members, 1)} members</p>
+                      </p>
+                    </div>
+                  </Link>
+                );
+              })
+            }
+          </div>
+          }
     </>
   );
 }
