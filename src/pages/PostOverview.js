@@ -1,11 +1,13 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router";
+import { CircleLoader } from "react-spinners";
 import formatter from "../helpers/formatter";
 
 function PostOverview() {
   const [post, setPost] = useState({});
   const [comments, setComments] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   let { subreddit, id, title } = useParams();
 
@@ -43,8 +45,12 @@ function PostOverview() {
             reply_upvotes: comment.data.replies,
           }))
         );
-      });
-  }, []);
+      }).finally(() => setLoading(false))
+  }, [subreddit, id, title]);
+
+  if (loading) {
+    return <CircleLoader className="loading" color="#ff4500" />;
+  }
 
   return (
     <>

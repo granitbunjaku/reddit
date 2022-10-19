@@ -17,9 +17,9 @@ function Trending() {
       .then((resp) => {
         setTreding(
           resp.map((x) => ({
-            name: x.data.data.children[0].data.title,
+            name: x.data.data.children[0].data.title.length > 50 ? `${x.data.data.children[0].data.title.substring(0, 47)}...` : x.data.data.children[0].data.title,
             subreddit: x.data.data.children[0].data.subreddit,
-            image: x.data.data.children[0].data.url_overridden_by_dest,
+            image: x.data.data.children[0].data.url_overridden_by_dest
           }))
         );
       });
