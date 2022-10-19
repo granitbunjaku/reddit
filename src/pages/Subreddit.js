@@ -22,7 +22,8 @@ function Subreddit() {
         online_users : formatter(data.active_user_count),
         date_created : convertToDate(data.created),
         subreddit_description : data.public_description,
-        theme_color : data.primary_color ? data.primary_color : data.key_color,
+        font_color : "white",
+        theme_color : data.key_color ? data.key_color : "white",
         banner : data.mobile_banner_image,
         subreddit_icon : data.icon_img ? data.icon_img : DefaultIcon
       }
@@ -30,7 +31,7 @@ function Subreddit() {
   }, [subreddit])
 
   return (
-    <div>
+    <div style={{color: subredditData.font_color}}>
         <div className='subreddit--banner'>
           <div className='banner--image'>
             <div className='banner' style={{background: subredditData.banner ? `url(${subredditData.banner})` : subredditData.theme_color}}></div>
@@ -41,7 +42,7 @@ function Subreddit() {
               {subredditData.subreddit_icon?.length ? <img src={subredditData.subreddit_icon} /> : DefaultIcon}
             </div>
 
-            <div className='subreddit--text'>
+            <div className='subreddit--text' style={{color: 'black'}}>
               <p className='subreddit--title'>{subredditData.subreddit_title}</p>
               <p className='subreddit--name'>{subredditData.subreddit_name}</p>
               <p className='posts'>Posts</p>
@@ -60,11 +61,11 @@ function Subreddit() {
             <div className='subreddit--aboutsection'>
               <div className='about--text' style={{backgroundColor: subredditData.theme_color}}><p>About Community</p></div>
               
-              <div className='subreddit--description'>
+              <div className='subreddit--description' style={{color: 'black'}}>
                   <p>{subredditData.subreddit_description}</p>
                   <p><i class="ph-cake"></i> Created {subredditData.date_created}</p>
 
-                <div className='subreddit--members'>
+                <div className='subreddit--members' style={{color: 'black'}}>
                     <p><span>{subredditData.subscribers}</span> <span>Members</span></p>
                     <p><span>{subredditData.online_users}</span> <span>Online Users</span></p>
                 </div>

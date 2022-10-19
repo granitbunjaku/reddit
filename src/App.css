@@ -125,6 +125,11 @@ iframe {
   margin-top: 0px;
 }
 
+.subreddit--posts a {
+  text-decoration: none;
+  color: black;
+}
+
 .subreddit--aboutsection {
   background-color: white;
   border: 1px solid white;
@@ -137,7 +142,6 @@ iframe {
   margin: 0px;
   padding: 11px 15px;
   border-radius: 7px 7px 0px 0px;
-  color: white;
 }
 
 .subreddit--container {
