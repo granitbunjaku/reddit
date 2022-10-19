@@ -1,10 +1,9 @@
-import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import DefaultIcon from "../helpers/DefaultIcon";
 import nFormatter from "../helpers/formatter";
 
-function Navbar({ searchActive, setSearchActive, subreddits, setSubreddits }) {
+function Navbar({ searchActive, setSearchActive, subreddits }) {
   const [searchResults, setSearchResults] = useState([]);
 
   function searchHandler(e) {

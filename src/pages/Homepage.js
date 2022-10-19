@@ -1,6 +1,5 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import { CircleLoader } from "react-spinners";
 import Post from "../components/Post";
 import TopSubreddits from "../components/Topsubreddits";
@@ -8,8 +7,7 @@ import Trending from "../components/Trending";
 import formatter from "../helpers/formatter";
 
 function Homepage({
-  subreddits,
-  setSubreddits,
+  subreddits
 }) {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -59,7 +57,6 @@ function Homepage({
           </div>
           <TopSubreddits
             subreddits={subreddits}
-            setSubreddits={setSubreddits}
           />
         </div>
       </div>

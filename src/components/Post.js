@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router";
 import { Link } from "react-router-dom";
 
 function Post({ post }) {
@@ -59,7 +58,6 @@ function Post({ post }) {
               }}
             >
               <p className="copy--text">
-                {" "}
                 <i className="ph-link"></i> Copy
               </p>
             </div>

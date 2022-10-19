@@ -1,9 +1,7 @@
 import React from "react";
 import DefaultIcon from "../helpers/DefaultIcon";
 
-function TopSubreddits({ subreddits, setSubreddits }) {
-  subreddits.length > 0 &&
-    subreddits.sort((a, b) => b.members - a.members).slice(0, 5);
+function TopSubreddits({ subreddits }) {
 
   return (
     <div className="top--subreddits">

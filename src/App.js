@@ -1,7 +1,7 @@
 import axios from "axios";
 import { nanoid } from "nanoid";
 import React, { useEffect, useState } from "react";
-import { Route, Router, Routes } from "react-router";
+import { Route, Routes } from "react-router";
 import "./App.css";
 import Navbar from "./components/Navbar";
 import Homepage from "./pages/Homepage";
@@ -25,17 +25,16 @@ function App() {
     );
   }, []);
 
-  function changeSearchActivew() {
+  function changeSearchActive() {
     setSearchActive(false);
   }
 
   return (
-    <div className="App" onClick={changeSearchActivew}>
+    <div className="App" onClick={changeSearchActive}>
       <Navbar
         searchActive={searchActive}
         setSearchActive={setSearchActive}
         subreddits={subreddits}
-        setSubreddits={setSubreddits}
       />
       <Routes>
         <Route path="/" element={<Homepage
