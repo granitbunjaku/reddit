@@ -7,7 +7,7 @@ function SubredditPosts({subredditPosts}) {
     <div className='subreddit--container'>
         <div className='subreddit--posts'>
             {subredditPosts.map((subredditPost) => (
-            <Post key={subredditPost.title} post={subredditPost} />
+            <Post key={subredditPost.id} post={subredditPost} />
             ))}
         </div>
     </div>

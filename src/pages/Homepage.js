@@ -1,16 +1,16 @@
 import axios from "axios";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { CircleLoader } from "react-spinners";
 import Post from "../components/Post";
 import TopSubreddits from "../components/Topsubreddits";
 import Trending from "../components/Trending";
+import { uContext } from "../context/UserContext";
 import formatter from "../helpers/formatter";
 
-function Homepage({
-  subreddits
-}) {
+function Homepage() {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
+  const {subreddits} = useContext(uContext);
 
   useEffect(() => {
     axios
