@@ -6,20 +6,25 @@ import DefaultIcon from "../helpers/DefaultIcon";
 import nFormatter from "../helpers/formatter";
 import { disableBodyScroll, enableBodyScroll } from 'body-scroll-lock';
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { logout } from "../slices/userSlice";
 
 function Navbar({ searchActive, setSearchActive}) {
+  const {isLoggedin, user} = useSelector(store => store.user)
+  const dispatch = useDispatch();
+
   const [searchResults, setSearchResults] = useState([]);
-  const {user, setUser, token, subreddits} = useContext(uContext);
+  const { subreddits} = useContext(uContext);
   const [isShown, setisShown] = useState(false);
   const [communityClicked, setCommunityClicked] = useState(false);
   const [categories, setCategories] = useState({});
   const navigate = useNavigate();
 
   useEffect(() => {
-    if(user.isLoggedin) {
+    if(isLoggedin) {
       axios.get(`http://localhost:8000/api/categories`, {
         headers: {
-          'Authorization': `Bearer ${token}`
+          'Authorization': `Bearer ${user.token}`
         }
       })
       .then(res => {
@@ -31,13 +36,16 @@ function Navbar({ searchActive, setSearchActive}) {
   function searchHandler(e) {
     let inputValue = e.target.value
 
-    let results = subreddits.filter((subreddit) => subreddit.name.includes(inputValue));
-    
+    let results = []
+
+    axios.get(`http://localhost:8000/api/search/${inputValue}`)
+    .then(res => {
+      setSearchResults(res.data)
+    })
+
     if(inputValue == ""){
       results = results.slice(0, 5)
     }
-
-    setSearchResults(results);
   }
 
   function handleSearchActive(e) {
@@ -48,25 +56,26 @@ function Navbar({ searchActive, setSearchActive}) {
   function handleLogout() {
     axios.post(`http://localhost:8000/api/logout`,{}, {
       headers: {
-        'Authorization': `Bearer ${token}`
+        'Authorization': `Bearer ${user.token}`
       }
     })
     .then(res => {
       localStorage.clear();
-      setUser({isLoggedin: false, data: {}});
+      dispatch(logout())
+      navigate('/login')
     });
   }
 
   const createSubreddit = (e) => {
     e.preventDefault();
     const selected = [...e.target.categories.selectedOptions].map(option => option.value);
-    axios.post(`http://localhost:8000/api/subreddit`, {
+    axios.post(`http://localhost:8000/api/subreddits`, {
       "name" : e.target.name.value,
       "type" : e.target.type.value,
       "categories" : selected
     }, {
       headers: {
-        'Authorization': `Bearer ${token}`
+        'Authorization': `Bearer ${user.token}`
       }
     })
     .then(res => {
@@ -77,8 +86,8 @@ function Navbar({ searchActive, setSearchActive}) {
 
   communityClicked ? disableBodyScroll(document) : enableBodyScroll(document);
 
-  function isLoggedIn() {
-    if(!user.isLoggedin) {
+  function navbar() {
+    if(!isLoggedin) {
       return (<div className="navbar--buttons">
         <Link to='/signup' className="signup">Sign Up</Link>
         <Link to='/login' className="login">Log In</Link>
@@ -87,20 +96,18 @@ function Navbar({ searchActive, setSearchActive}) {
         </i>
       </div>)
     } else {
-      return (<div className="navbar--buttons">
+      return (
+      <div className="navbar--buttons">
         <i className="ph-plus" style={{fontSize: "23px"}}></i>
         <div className="loggedin--user" onClick={() => {setisShown(!isShown)}}>
-          <img src={`http://localhost:8000/api/profilepic/${user.data.id}`} />
-          <p>{user.data.name}</p>
+          <img src={`http://localhost:8000/api/photos/${user.avatar}`} />
+          <p>{user.name}</p>
           <i className="ph-caret-down"></i>
         </div>
         <div className="loggedin--infos" style={{display: isShown ? "block" : "none"}}>
           <div>
-            <Link to={`profile/${user.data.id}`} style={{textDecoration: "none"}}><i className="ph-user-circle"></i> Profile</Link>
+            <Link to={`user/${user.id}`} style={{textDecoration: "none"}}><i className="ph-user-circle"></i> Profile</Link>
           </div>
-          {/* <div>
-            <i class="ph-circle"></i> Online Status
-          </div> */}
           <div onClick={() => { setCommunityClicked(!communityClicked); setisShown(false)}} style={{cursor: "pointer"}}>
             <i className="ph-reddit-logo"></i> Create a Community
           </div>
@@ -149,7 +156,8 @@ function Navbar({ searchActive, setSearchActive}) {
       </div>
       }
 
-      </div>)
+      </div>
+      )
     }
   }
 
@@ -168,21 +176,37 @@ function Navbar({ searchActive, setSearchActive}) {
             onClick={handleSearchActive}
           />
         </div>
-        {isLoggedIn()}
+        {navbar()}
       </div>
 
         {searchResults &&
           searchActive &&
           <div className="search--results">
             {
-              searchResults.map((res) => {
+              searchResults.subreddits?.map((res) => {
                 return (
                   <Link to={`r/${res.name}`}>
                     <div className="results">
-                      {res.icon.length ? <img src={res.icon} /> : DefaultIcon}
+                      <img src={`http://localhost:8000/api/photos/${res.profile_image }`} />
                       <p key={res.name}>
-                        <p>{res.name}</p>
+                        <p>r/{res.name}</p>
                         <p>Community &bull; {nFormatter(res.members, 1)} members</p>
+                      </p>
+                    </div>
+                  </Link>
+                );
+              })
+            }
+            
+            {
+              searchResults.users?.map((res) => {
+                return (
+                  <Link to={`user/${res.id}`}>
+                    <div className="results">
+                      <img src={`http://localhost:8000/api/photos/${res.avatar }`} />
+                      <p key={res.name}>
+                        <p>u/{res.name}</p>
+                        <p>User</p>
                       </p>
                     </div>
                   </Link>

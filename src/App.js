@@ -11,14 +11,29 @@ import PostOverview from "./pages/PostOverview";
 import Signup from "./pages/Signup";
 import Subreddit from "./pages/Subreddit";
 import Profile from "./pages/Profile";
+import Protected from "./components/Protected";
+import VerifiedEmail from "./pages/VerifiedEmail";
+import VerifyEmail from "./pages/VerifyEmail";
+import { getSubreddits } from "./slices/subredditsSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { getPosts } from "./slices/postsSlice";
 
 function App() {
   const [searchActive, setSearchActive] = useState(false);
-  const {user, token, subreddits} = useContext(uContext);
+  const dispatch = useDispatch()
+  const {subreddit} = useSelector(store => store.subreddit)
 
   function changeSearchActive() {
     setSearchActive(false);
   }
+
+  useEffect(() => {
+      dispatch(getSubreddits())
+  }, [subreddit])
+
+  useEffect(() => {
+    dispatch(getPosts())
+  }, [])
 
   return (
     <UserContext>
@@ -33,10 +48,26 @@ function App() {
             setSearchActive={setSearchActive}
           />} />
           <Route path="/post/r/:subreddit/comments/:id/:title" element={<PostOverview />}/>
-          <Route path="r/:subreddit" element={<Subreddit />}/>
-          <Route path="/signup" element={<Signup />}/>
-          <Route path="/login" element={<Login />}/>
-          <Route path="/profile/:id" element={<Profile />}/>
+          <Route
+            path="/signup"
+            element={
+              <Protected shouldBeLoggedin={false}>
+                <Signup />
+              </Protected>
+            }
+          />
+          <Route
+            path="/login"
+            element={
+              <Protected shouldBeLoggedin={false}>
+                <Login />
+              </Protected>
+            }
+          />
+          <Route path="/r/:subreddit" element={<Subreddit />}/>
+          <Route path="/user/:id" element={<Profile />}/>
+          <Route path="/verifyemail" element={<VerifyEmail />}/>
+          <Route path="/emailverified/:id" element={<VerifiedEmail />}/>
         </Routes>
       </div>
     </UserContext>

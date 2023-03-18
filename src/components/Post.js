@@ -1,43 +1,71 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
-
+import React, { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { Link, useParams } from "react-router-dom";
+import { vote } from "../slices/postSlice";
+ 
 function Post({ post }) {
   const [copy, setCopy] = useState(false);
+  const [upvote, setUpvote] = useState(false);
+  const [downvote, setDownvote] = useState(false);
+  const dispatch = useDispatch()
+
+  const {id} = useParams()
 
   function handleShare(e) {
     e.preventDefault();
     setCopy(!copy);
   }
 
+  useEffect(() => {
+    if(post.isVoted == "upvote") {
+      setUpvote(true)
+    } else if(post.isVoted == "downvote") {
+      setDownvote(true)
+    }
+  }, [])
+
+  const votePost = (type) => {
+    if(id) {
+      dispatch(vote({name: "post", type: type, id: id}))
+    } else {
+      dispatch(vote({name: "post", type: type, id: post.data.id}))
+    }
+
+    if(type=="upvote") {
+      setUpvote(!upvote)
+      setDownvote(false)
+    } else {
+      setUpvote(false)
+      setDownvote(!downvote)
+    }
+  }
+
   return (
-    <Link to={`/post/${post.subreddit}/comments/${
-      post.post_code.split("_")[1]
-    }/${post.title.replace(/ /g, "_").replace(/\//g, "%")}`}>
       <div className="post">
         <div className="upvotes">
-          <i className="ph-arrow-fat-up upvote--arrow"></i>
-          <p className="post--upvotes">{post.upvotes}</p>
-          <i className="ph-arrow-fat-up upvote--arrow arrow2"></i>
+          <i className="ph-arrow-fat-up upvote--arrow" onClick={() => votePost("upvote")} style={{color: `${upvote ? "orange" : "grey"}`}}></i>
+          <p className="post--upvotes">{post.votes}</p>
+          <i className="ph-arrow-fat-up upvote--arrow arrow2" onClick={() => votePost("downvote")} style={{color: `${downvote ? "blue" : "grey"}`}}></i>
         </div>
 
         <div className="post--content">
           <div className="top--section">
             <span className="post--details">
-              <p>{post.subreddit}</p> &bull;
-              <p className="user">Posted by u/{post.author_fullname}</p>
+              <Link to={`/r/${post.subreddit}`}><p>{post.subreddit}</p></Link> &bull;
+              <Link to={`/user/${post.data.user_id}`}><p>Posted by u/{post.user_name}</p></Link> &bull;
             </span>
-            <p className="post--title">{post.title}</p>
+            <p className="post--title">{post.data.title}</p>
           </div>
 
-          {post.is_video ? (
+          {/* {post.is_video ? (
             <iframe src={post.video_url} width="100%" height="350px" />
           ) : (
             <img src={post.image} className="post--image" />
-          )}
+          )} */}
 
           <div className="post--comments">
             <i className="ph-chat-centered"></i>
-            <span className="comment-num">{post.num_comments} comments </span>
+            <Link to={`/post/r/${post.subreddit}/comments/${post.data.id}/${post.data.title}`}><span className="comment-num">{post.num_comments} comments </span></Link>
 
             <div onClick={handleShare} className="share">
               <i className="ph-share" style={{ marginLeft: "10px" }}></i>
@@ -64,7 +92,6 @@ function Post({ post }) {
           )}
         </div>
       </div>
-    </Link>
   );
 }
 

@@ -19,7 +19,7 @@ export default function Signup() {
             }
         })
         .then(res => {
-            navigate('/login');
+            navigate('/verifyemail');
         })
     }
 

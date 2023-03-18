@@ -875,6 +875,11 @@ label[for='categories'] {
   height: 90px;
 }
 
+.cover--pic {
+  width: 100%;
+  height: 100%;
+}
+
 .profile--card {
   background-color: white;
   border: none;
@@ -947,6 +952,28 @@ label[for='categories'] {
   border: 2px solid #0079D3;
 }
 
+.subreddit--pfp div{
+  width: 35px;
+  height: 35px;
+  border-radius: 20px;
+  position: absolute;
+  top: 60px;
+  left: 65px;
+  background-color: white;
+  border: 2px solid #0079D3;
+}
+
+.subreddit--cover div{
+  width: 35px;
+  height: 35px;
+  border-radius: 20px;
+  position: absolute;
+  top:345px;
+  right: 25px;
+  background-color: white;
+  border: 2px solid #0079D3;
+}
+
 .moderator--infos {
   background-color: white;
   border: none;
@@ -960,8 +987,6 @@ label[for='categories'] {
 .post--overview {
   width: 640px;
   height: 540px;
-  background-color: grey;
-
 }
 
 .all--profile--content {
@@ -1011,4 +1036,38 @@ label[for='categories'] {
 
 .description--form .save--description{
   background-color: #00bd0c;
+}
+
+.email--verified {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 13%;
+}
+
+.second--login--button,
+.open--email {
+  padding: 10px 35px;
+  background-color: #007ede;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 25px;
+  text-decoration: none;
+}
+
+.email--verified h2 {
+  margin-bottom: 0px;
+}
+
+.show--single--post {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.show--single--post a{
+  text-decoration: none;
+  color: black;
 }

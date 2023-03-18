@@ -1,14 +1,10 @@
-import axios from "axios"
-import { useContext} from "react";
-import { redirect } from "react-router";
-import { uContext } from "../context/UserContext";
-import { useNavigate} from "react-router-dom";
+import axios from "axios";
+import { getUser } from "../slices/userSlice";
+import { useDispatch, useSelector } from "react-redux";
 
 
 export default function Login() {
-    const navigate = useNavigate();
-
-    const {user, setUser} = useContext(uContext);
+    const dispatch = useDispatch();
     
     function loginHandle(e) {
         e.preventDefault();
@@ -19,31 +15,19 @@ export default function Login() {
         })
         .then(res => {
             localStorage.setItem('jwt', res.data);
-            setUser({isLoggedin: true, data: res.data})
+            dispatch(getUser())
         })
     }
 
-    function controllUser() {
-        if(!user.isLoggedin) {
-            return (
-                <>
-                    <form method="post" action="#" className="loginform" onSubmit={loginHandle}>
-                        <label htmlFor="email">Email:</label>
-                        <input type="text" name="email" id="email"/>
-                        <label htmlFor="password">Password:</label>
-                        <input type="password" name="password" id="password"/>
-                        <button type="submit">Login</button>
-                    </form>
-                </>
-            )
-        } else {
-            window.location.href = "http://localhost:3000/";
-        }
-    }
-    
     return (
         <>
-            {controllUser()}
+            <form method="post" action="#" className="loginform" onSubmit={loginHandle}>
+                <label htmlFor="email">Email:</label>
+                <input type="text" name="email" id="email"/>
+                <label htmlFor="password">Password:</label>
+                <input type="password" name="password" id="password"/>
+                <button type="submit">Login</button>
+            </form>
         </>
     )
 }
